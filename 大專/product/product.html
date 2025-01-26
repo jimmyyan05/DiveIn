@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        .product-img {
+            /* width: 500px;
+            height: 500px; */
+            background-color: gray;
+            /* border: 1px solid #827e7e; */
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .product-img img {
+            max-width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
+
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: #827e7e53;
+        }
+
+        /* TODO */
+        .sizeBox {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #827e7e;
+            text-align: center;
+            line-height: 40px;
+
+        }
+
+        .circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #808080;
+            cursor: pointer;
+
+        }
+
+        .buttonCount {
+            border: 1px solid #6161616d;
+            border-radius: 50px;
+            display: flex;
+            /* 使用 Flexbox 讓子項排成一行 */
+            width: 100%;
+            /* 撐滿父容器 */
+            align-items: center;
+            /* 子項垂直置中 */
+
+        }
+
+        .button-left,
+        .button-right {
+            width: 15%;
+            padding: 10px;
+            background-color: #ffffff;
+            border: 0;
+        }
+
+        .button-left {
+            border-radius: 50px 0 0 50px;
+            border-right: 1px solid #6161616d;
+        }
+
+        .button-right {
+            border-radius: 0 50px 50px 0;
+            border-left: 1px solid #6161616d;
+        }
+
+
+        .input-field {
+            width: 70%;
+            border: 1px solid #ccc;
+            border-left: none;
+            border-right: none;
+            text-align: center;
+            flex: 1;
+            height: 100%;
+        }
+
+        .input-field:focus {
+            outline: none;
+            /* 移除 input 框的外框 */
+        }
+
+        .addCartButton {
+            border-radius: 50px;
+        }
+
+        .buyButton {
+            border-radius: 50px;
+        }
+
+
+        /* SECTION 2 */
+        .descriptionField {
+            /* width: 100%; */
+            height: auto;
+            border: 1px solid #808080;
+        }
+
+        .descriptionTitle {
+            background: #E5E5E5;
+            padding: 0 10px;
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+        }
+
+        .custom-border {
+            border-left: 4px solid #999;
+            padding-left: 15px;
+            /* font-style: italic; */
+
+        }
+
+        /* 按鈕群組定位 */
+        .button-group {
+            position: absolute;
+            top: 10px;
+            /* 距離頂部距離 */
+            right: 10px;
+            /* 距離右側距離 */
+            /* z-index: 2; */
+            /* 確保顯示在圖片上方 */
+            display: flex;
+            flex-direction: column;
+            /* 垂直排列 */
+            gap: 8px;
+            /* 按鈕間距 */
+        }
+
+        .like-button,
+        .cart-button {
+            background-color: #808080;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            transition: 0.3s;
+            /* 懸停動畫 */
+            cursor: pointer;
+        }
+
+        /* 懸停效果 */
+        .like-button:hover,
+        .cart-button:hover {
+            background-color: #666;
+            transform: scale(1.1);
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row ">
+            <div class="col-6 ">
+                <div class="product-img">
+                    <img src="1.webp" alt="">
+                </div>
+                <div class="d-flex justify-content-evenly mt-3">
+                    <div class="box"></div>
+                    <div class="box"></div>
+                    <div class="box"></div>
+                    <div class="box"></div>
+                </div>
+
+            </div>
+            <div class="col-6 ">
+                <div class="d-flex flex-column gap-2">
+                    <h3 class="fw-bold text-secondary">TRYGONS</h3>
+                    <h1>液態面鏡</h1>
+                    <hr>
+                    <h2><span
+                            class="text-decoration-line-through me-3 text-secondary">NT$1999</span><span>NT$1999</span>
+                    </h2>
+                    <div></div>
+                    <div>⭐️⭐️⭐️⭐️⭐️</div>
+                    <div>能保有正常水下視野，並省去面鏡平壓的空氣消耗外圍膠框以亞洲人臉型掃描製作，合臉度更佳；亦可自行打磨增加貼合搭配鼻夾使用，平衡耳壓更輕鬆</div>
+                    <li>內含二顆凸透鏡，依潛水員瞳孔位置膠黏於膠框即完成安裝</li>
+                    <li>原廠安裝影片 https://www.youtube.com/watch?v=b3vZCzKmWOs</li>
+                    <h5 class="fw-bold">
+                        庫存僅剩五件
+                    </h5>
+                    <div>產品尺寸</div>
+                    <div class="d-flex gap-2">
+                        <div class="sizeBox">S</div>
+                        <div class="sizeBox">M</div>
+                        <div class="sizeBox">L</div>
+                        <div class="sizeBox">XL</div>
+                    </div>
+                    <div>產品顏色</div>
+                    <div class="d-flex gap-2">
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                    </div>
+                    <div>產品數量</div>
+                    <div class="buttonCount">
+                        <button class=" button-left fs-5">-</button>
+                        <input class="text-center border-0 input-field" type="text" value="1">
+                        <button class=" button-right fs-5">+</button>
+                    </div>
+                    <div class="d-flex mt-4">
+                        <button class="btn-warning btn addCartButton flex-grow-1">加入購物車</button>
+                        <button class="btn-info btn buyButton flex-grow-1">直接購物</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class=" mt-3 descriptionField">
+            <div class="d-flex justify-content-center">
+                <div class="descriptionTitle mt-3">
+                    商品描述
+                </div>
+            </div>
+            <div class="ms-3">
+                <h4>
+                    SPHERA X 新改版
+                </h4>
+                <p>
+                    文字描述
+                </p>
+                <p class="custom-border">
+                    不想多費空氣做面鏡平壓，又希望在水中保有視力，液態面鏡專為自潛玩家而生；
+                    搭配鼻夾使用可大幅度減少平壓需克服的問題(如捏鼻狀況、空氣分配等)，更專注的下潛
+                    被譽為全世界潛最深的男人(the Deepest Man on Earth)，Herbert Nitsch 擁有三項世界紀錄，同時也是TRYGONS的愛用者。
+                </p>
+            </div>
+
+        </div>
+        <h1 class="text-center mt-5">你可能會喜歡</h1>
+        <!-- SECTION 當row裡面有row時，要用g-0來刪除間隔 或是mx-auto來置中 結果我後來是簽套問題 請避免row裡面有row -->
+        <div class="row you-like">
+            <div class="col-3">
+                <!-- 商品圖片區塊 -->
+                <div class="product-img">
+                    <img src="1.webp" alt="">
+                    <!-- 按鈕容器 -->
+                    <div class="button-group">
+                        <div class="like-button"></div>
+                        <div class="cart-button"></div>
+                    </div>
+                </div>
+
+                <!-- 商品資訊 -->
+                <div class="text-center">
+                    <h3>TRYGONS</h3>
+                    <h2>液態面鏡</h2>
+                    <h2 class="text-decoration-line-through">NT$2500</h2>
+                    <h2>NT$1999</h2>
+                </div>
+            </div>
+            <div class="col-3">
+                <!-- 商品圖片區塊 -->
+                <div class="product-img">
+                    <img src="1.webp" alt="">
+
+                    <!-- 按鈕容器 -->
+                    <div class="button-group">
+                        <div class="like-button"></div>
+                        <div class="cart-button"></div>
+                    </div>
+                </div>
+
+                <!-- 商品資訊 -->
+                <div class="text-center">
+                    <h3>TRYGONS</h3>
+                    <h2>液態面鏡</h2>
+                    <h2 class="text-decoration-line-through">NT$2500</h2>
+                    <h2>NT$1999</h2>
+                </div>
+            </div>
+            <div class="col-3">
+                <!-- 商品圖片區塊 -->
+                <div class="product-img">
+                    <img src="1.webp" alt="">
+
+                    <!-- 按鈕容器 -->
+                    <div class="button-group">
+                        <div class="like-button"></div>
+                        <div class="cart-button"></div>
+                    </div>
+                </div>
+
+                <!-- 商品資訊 -->
+                <div class="text-center">
+                    <h3>TRYGONS</h3>
+                    <h2>液態面鏡</h2>
+                    <h2 class="text-decoration-line-through">NT$2500</h2>
+                    <h2>NT$1999</h2>
+                </div>
+            </div>
+            <div class="col-3">
+                <!-- 商品圖片區塊 -->
+                <div class="product-img">
+                    <img src="1.webp" alt="">
+
+                    <!-- 按鈕容器 -->
+                    <div class="button-group">
+                        <div class="like-button"></div>
+                        <div class="cart-button"></div>
+                    </div>
+                </div>
+
+                <!-- 商品資訊 -->
+                <div class="text-center">
+                    <h3>TRYGONS</h3>
+                    <h2>液態面鏡</h2>
+                    <h2 class="text-decoration-line-through">NT$2500</h2>
+                    <h2>NT$1999</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const products = [
+            { name: "TRYGONS", description: "液態面鏡", originalPrice: "NT$2500", salePrice: "NT$1999", imgSrc: "1.webp" },
+            { name: "商品2", description: "描述2", originalPrice: "NT$3000", salePrice: "NT$2499", imgSrc: "1.webp" },
+            { name: "商品3", description: "描述3", originalPrice: "NT$4000", salePrice: "NT$3499", imgSrc: "1.webp" },
+            { name: "商品4", description: "描述4", originalPrice: "NT$5000", salePrice: "NT$4499", imgSrc: "1.webp" }
+        ];
+
+        function createProducts() {
+            const productContainer = document.querySelector('.you-like');
+            for (let i = 0; i < products.length; i++) {
+                const product = products[i];
+                const productItem = document.createElement("div");
+                productItem.className = "col-3";
+                productItem.innerHTML = `
+                    <div class="product-img">
+                        <img src="${product.imgSrc}" alt="">
+                        <div class="button-group">
+                            <div class="like-button"></div>
+                            <div class="cart-button"></div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h3>${product.name}</h3>
+                        <h2>${product.description}</h2>
+                        <h2 class="text-decoration-line-through">${product.originalPrice}</h2>
+                        <h2>${product.salePrice}</h2>
+                    </div>
+                `;
+                productContainer.appendChild(productItem);
+            }
+        }
+
+
+        // 調用函數以生成商品
+        // createProducts();
+    </script>
+</body>
+
+
+
+
+</html>

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>商品列表頁</title>
+    <style>
+        .side-bar {
+            padding-right: 15px;
+        }
+
+        .col-9 {
+            background-color: #ffffff;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .card-title {
+            text-align: center;
+            background-color: rgb(228, 228, 228);
+            color: #000000;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+
+        .side-card {
+            border: 1px solid rgb(228, 228, 228);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+        }
+
+        .circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #808080;
+            cursor: pointer;
+        }
+
+        .sale-circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #ff0000;
+            cursor: pointer;
+        }
+
+        .product-list {
+            margin-top: 20px;
+
+            .product-item {
+                margin-bottom: 20px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+                cursor: pointer;
+
+                .product-img {
+                    width: 100%;
+                    max-width: 200px;
+                    position: relative;
+                }
+            }
+        }
+
+        .original-price {
+            text-decoration: line-through;
+        }
+
+        .price-range {
+            padding: 10px;
+        }
+
+        .price-inputs {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .price-input {
+            width: 80px;
+            padding: 4px 8px;
+            border: 1px solid #e4e4e4;
+            border-radius: 4px;
+        }
+
+        .price-separator {
+            color: #808080;
+        }
+
+        /*下拉式 */
+        /* 簡化的下拉選單樣式 */
+        .simple-dropdown {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 50px;
+            /* 圓角按鈕 */
+            padding: 8px 20px;
+            color: #666;
+            min-width: 200px;
+            text-align: left;
+        }
+
+        .simple-menu {
+            width: 100%;
+            border: 1px solid #e0e0e0;
+            padding: 8px 0;
+            margin-top: 4px;
+        }
+
+        .simple-menu .dropdown-item {
+            padding: 8px 20px;
+        }
+
+        .product-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            /* 預設隱藏 */
+            transition: opacity 0.3s ease;
+            /* 添加過渡效果 */
+        }
+
+        .product-img:hover .product-overlay {
+            opacity: 1;
+        }
+
+        .preview-content button {
+            opacity: 1;
+            z-index: 2;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row align-items-start">
+            <div>
+                <a href="">首頁</a>
+                /
+                <a href="">商品列表頁</a>
+            </div>
+
+            <div class="col-3 d-grid gap-2 side-bar">
+                <div class="side-card">
+                    <div class="card-title">產品分類</div>
+                    <div class="m-2">商品分類</div>
+                    <div class="m-2">商品分類</div>
+                    <div class="m-2">商品分類</div>
+                </div>
+                <button class="btn btn-primary">套用篩選(0/20)</button>
+                <div class="side-card">
+                    <div class="card-title">商品篩選</div>
+                    <!-- 價格區間部分 -->
+                    <div class="m-2">
+                        <div>價格區間</div>
+                        <div class="price-range">
+                            <div class="price-inputs">
+                                <input type="number" placeholder="最低" class="price-input" />
+                                <div class="price-separator">-</div>
+                                <input type="number" placeholder="最高" class="price-input" />
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="m-2">
+                        <div>品牌類別</div>
+                        <div class="d-flex flex-column gap-1">
+                            <label for=""><input type="checkbox" />LEADERS (4)</label>
+                            <label for=""><input type="checkbox" />OMER (15)</label>
+                        </div>
+
+                    </div>
+                    <hr />
+                    <div class="m-2">
+                        <div>顏色類別</div>
+                        <div class="d-flex gap-2">
+                            <div class="circle"></div>
+                            <div class="circle"></div>
+                            <div class="circle"></div>
+                            <div class="circle"></div>
+                            <div class="circle"></div>
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="m-2 ">
+                        <div class="d-flex flex-column gap-1">
+                            <div>防寒衣厚度</div>
+                            <label for=""><input type="checkbox" />1.2mm (4)</label>
+                            <label for=""><input type="checkbox" />1.5mm (14)</label>
+                            <label for=""><input type="checkbox" />2mm (39)</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="side-card">
+                    <div class="card-title">新品上市</div>
+                    <div class="d-flex m-2 gap-2">
+                        <div class="w-25"><img class="w-100" src="1.webp" alt="" /></div>
+                        <div>
+                            <div>品牌名稱</div>
+                            <div>商品名稱</div>
+                            <div>NT$0000</div>
+                            <div class="d-flex gap-1">
+                                <div class="sale-circle"></div>
+                                <div class="sale-circle"></div>
+                                <div class="sale-circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex m-2 gap-2">
+                        <div class="w-25"><img class="w-100" src="1.webp" alt="" /></div>
+                        <div>
+                            <div>品牌名稱</div>
+                            <div>商品名稱</div>
+                            <div>NT$0000</div>
+                            <div class="d-flex gap-1">
+                                <div class="sale-circle"></div>
+                                <div class="sale-circle"></div>
+                                <div class="sale-circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex m-2 gap-2">
+                        <div class="w-25"><img class="w-100" src="1.webp" alt="" /></div>
+                        <div>
+                            <div>品牌名稱</div>
+                            <div>商品名稱</div>
+                            <div>NT$0000</div>
+                            <div class="d-flex gap-1">
+                                <div class="sale-circle"></div>
+                                <div class="sale-circle"></div>
+                                <div class="sale-circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 特惠商品 -->
+                <div class="side-card">
+                    <div class="card-title">特惠商品</div>
+                    <div class="d-flex m-2 gap-2">
+                        <div class="w-25"><img class="w-100" src="1.webp" alt="" /></div>
+                        <div>
+                            <div>品牌名稱</div>
+                            <div>商品名稱</div>
+                            <div>NT$0000</div>
+                            <div class="d-flex gap-1">
+                                <div class="sale-circle"></div>
+                                <div class="sale-circle"></div>
+                                <div class="sale-circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex m-2 gap-2">
+                        <div class="w-25"><img class="w-100" src="1.webp" alt="" /></div>
+                        <div>
+                            <div>品牌名稱</div>
+                            <div>商品名稱</div>
+                            <div>NT$0000</div>
+                            <div class="d-flex gap-1">
+                                <div class="sale-circle"></div>
+                                <div class="sale-circle"></div>
+                                <div class="sale-circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex m-2 gap-2">
+                        <div class="w-25"><img class="w-100" src="1.webp" alt="" /></div>
+                        <div>
+                            <div>品牌名稱</div>
+                            <div>商品名稱</div>
+                            <div>NT$0000</div>
+                            <div class="d-flex gap-1">
+                                <div class="sale-circle"></div>
+                                <div class="sale-circle"></div>
+                                <div class="sale-circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-9">
+                <h1>潛水必備裝備，一站式選購體驗</h1>
+                <p>
+                    歡迎來到我們的商品專區，這裡匯集了潛水愛好者必備的精選裝備！從舒適貼合的潛水服到高性能的潛水電筒，我們為您精心挑選每一件商品，確保品質與實用性兼具。無論您是初學者還是資深潛水員，這裡都有滿足您需求的最佳選擇。
+                </p>
+
+                <p>
+                    現在購物，還可享受獨家優惠：單筆滿 $3000
+                    即享免運服務，並有多款商品參與限時折扣活動！立即瀏覽，輕鬆找到適合您的專屬裝備，為下一次潛水旅程做好準備。探索深海奇觀，就從裝備開始！
+                </p>
+                <p>下方為我們的熱賣商品列表，快來挑選吧！</p>
+                <!-- 輪播圖 -->
+                <div class="position-relative">
+                    <img class="w-100" src="product-top-slide.png" alt="Whale image" />
+
+                    <div class="position-absolute top-50 end-0 translate-middle-y">
+                        <div class="text-end me-5 pe-3">
+                            <h3 class="text-white mb-4">
+                                專業裝備，<br />
+                                陪你深海冒險每一步！
+                            </h3>
+                            <a href="#shop" class="btn btn-primary">ShopNou</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 顯示排序和分頁功能 -->
+                <div class="d-flex justify-content-between mt-4">
+                    <div>顯示 <span>第1頁/共10頁</span> 商品</div>
+                    <!-- 排序下拉選單 -->
+                    <div class="d-flex align-items-center">
+                        <div class="me-3">排序</div>
+                        <div class="btn-group">
+                            <button class="btn dropdown-toggle simple-dropdown" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                下拉選取排序條件
+                            </button>
+                            <ul class="dropdown-menu simple-menu">
+                                <li><a class="dropdown-item" href="#">Menu item</a></li>
+                                <li><a class="dropdown-item" href="#">Menu item</a></li>
+                                <li><a class="dropdown-item" href="#">Menu item</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 排序下拉選單 -->
+                    <div class="d-flex align-items-center">
+                        <div class="btn-group">
+                            <button class="btn dropdown-toggle simple-dropdown" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                每頁顯示24件
+                            </button>
+                            <ul class="dropdown-menu simple-menu">
+                                <li><a class="dropdown-item" href="#">每頁24件</a></li>
+                                <li><a class="dropdown-item" href="#">每頁48件</a></li>
+                                <li><a class="dropdown-item" href="#">每頁72件</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="row product-list">
+                        <!-- <div class="col-3 product-item">
+                            <div class="product-img">
+                                <img class="w-100" src="1.webp" alt="">
+                                <div class="product-overlay">
+                                    <div
+                                        class="preview-content d-flex flex-column align-items-center justify-content-end h-100 gap-2 p pb-3">
+                                        <button class="btn "><i class="fa-regular fa-heart"></i></button>
+                                        <button class="btn btn-primary">加入購物車</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="brand-name">品牌名稱 ${i + 1}</div>
+                                <div>商品名稱 ${i + 1}</div>
+                                <div class="original-price">NT$0000</div>
+                                <div class="sale-price">NT$0000</div>
+                                <div class="d-flex gap-1">
+                                    <div class="sale-circle"></div>
+                                    <div class="sale-circle"></div>
+                                    <div class="sale-circle"></div>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <div>顯示 <span>第1頁/共10頁</span> 商品</div>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script>
+        const productList = document.querySelectorAll(".product-item");
+        productList.forEach((item) => {
+            item.addEventListener("click", () => {
+                window.location.href = "product-detail.html";
+            });
+        });
+        const productContainer = document.querySelector(".product-list");
+        for (let i = 0; i < 16; i++) {
+            const productItem = document.createElement("div");
+            productItem.className = "col-3 product-item";
+            productItem.innerHTML = `
+                            <div class="product-img">
+                                <img class="w-100" src="1.webp" alt="">
+                                <div class="product-overlay">
+                                    <div
+                                        class="preview-content d-flex flex-column align-items-center justify-content-end h-100 gap-2 p pb-3">
+                                        <button class="btn "><i class="fa-regular fa-heart"></i></button>
+                                        <button class="btn btn-primary">加入購物車</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="brand-name">品牌名稱 ${i + 1}</div>
+                                <div>商品名稱 ${i + 1}</div>
+                                <div class="original-price">NT$0000</div>
+                                <div class="sale-price">NT$0000</div>
+                                <div class="d-flex gap-1">
+                                    <div class="sale-circle"></div>
+                                    <div class="sale-circle"></div>
+                                    <div class="sale-circle"></div>
+                                </div>
+                            </div>
+`;
+            productContainer.appendChild(productItem);
+        }
+    </script>
+</body>
+
+</html>

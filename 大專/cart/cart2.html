@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>訂單付款頁面</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        /* 步驟條樣式 */
+        .step-connector {
+            flex: 1;
+            /* 佔滿剩餘空間 */
+            height: 5px;
+            border-radius: 10px;
+            background: #dee2e6;
+            margin: 0 10px;
+            /* 控制間距 */
+            position: relative;
+            top: 17.5px;
+            /* 對齊徽章中心 */
+            background-color: blue;
+        }
+
+
+        /* 步驟徽章統一尺寸 */
+        .step-badge {
+            width: 40px;
+            height: 40px;
+        }
+
+        .card-title {
+            background-color: #e99191;
+        }
+
+        .total-price-area {
+            margin-top: 20px;
+            text-align: center;
+            align-items: center;
+            border: 1px solid #e99191;
+        }
+
+
+
+
+        /* 信用卡樣式 */
+        .card-container {
+            width: 100%;
+            max-width: 350px;
+            perspective: 1000px;
+            margin: 20px auto;
+        }
+
+        .credit-card {
+            width: 100%;
+            height: 220px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            border-radius: 15px;
+            background: linear-gradient(45deg, #1a237e, #0d47a1);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-back {
+            background: linear-gradient(45deg, #0d47a1, #1a237e);
+            transform: rotateY(180deg);
+        }
+
+        .card-number {
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+            margin-top: auto;
+        }
+
+        .card-holder {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .card-expiry {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 0.9rem;
+        }
+
+        .cvc-strip {
+            background: #fff;
+            color: #333;
+            padding: 8px;
+            width: 80%;
+            text-align: right;
+            border-radius: 4px;
+            margin: 0 auto;
+        }
+
+        /* 自定義表單樣式 */
+        .form-floating {
+            margin-bottom: 1rem;
+        }
+
+        .form-control:focus {
+            border-color: #86b7fe;
+            box-shadow: 0 0 0 4px rgba(13, 71, 161, 0.25);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container py-5">
+        <!-- 步驟條 -->
+        <div class="container py-5">
+            <div class="d-flex align-items-start justify-content-between">
+                <!-- 步驟1 -->
+                <div class="text-center position-relative">
+                    <div
+                        class="step-badge bg-primary text-white d-inline-flex rounded-circle align-items-center justify-content-center">
+                        1
+                    </div>
+                    <div class="mt-2">確認購物車</div>
+                </div>
+
+                <!-- 連接線1 -->
+                <div class="step-connector"></div>
+
+                <!-- 步驟2 -->
+                <div class="text-center position-relative">
+                    <div
+                        class="step-badge bg-secondary text-white rounded-circle d-inline-flex align-items-center justify-content-center">
+                        2
+                    </div>
+                    <div class="mt-2">付款及運送方式<br>優惠券填寫</div>
+                </div>
+
+                <!-- 連接線2 -->
+                <div class="step-connector"></div>
+
+                <!-- 步驟3 -->
+                <div class="text-center position-relative">
+                    <div
+                        class="step-badge bg-secondary text-white rounded-circle d-inline-flex align-items-center justify-content-center">
+                        3
+                    </div>
+                    <div class="mt-2">完成訂購</div>
+                </div>
+            </div>
+            <div class="total-price-area">
+                <h2>合計：NT$1810</h2>
+                <div>購物車(3件) </div>
+            </div>
+
+            <!-- 主要內容 -->
+            <div class="row gx-4 mt-4">
+                <!-- 左欄 -->
+                <div class="col-lg-6">
+                    <!-- 顧客資料 -->
+                    <div class="card mb-4 border-primary">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0"><i class="bi bi-person me-2"></i>顧客資料</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="vstack gap-3">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="customerName" value="王小明" readonly>
+                                    <label>顧客名稱</label>
+                                </div>
+                                <div class="form-floating">
+                                    <input type="email" class="form-control" id="customerEmail" value="abcde@gmail.com"
+                                        readonly>
+                                    <label>電子信箱</label>
+                                </div>
+                                <div class="form-floating">
+                                    <input type="tel" class="form-control" id="customerPhone" value="+886 0322123456"
+                                        readonly>
+                                    <label>電話號碼</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 訂單備註 -->
+                    <div class="card border-primary">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0"><i class="bi bi-chat-dots me-2"></i>訂單備註</h5>
+                        </div>
+                        <div class="card-body">
+                            <textarea class="form-control" rows="4" placeholder="有什麼特別需求嗎？"></textarea>
+                            <small class="text-muted mt-2 d-block">
+                                <i class="bi bi-exclamation-circle me-1"></i>
+                                預購商品無法提供退/換貨
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右欄 -->
+                <div class="col-lg-6">
+                    <div class="vstack gap-4">
+                        <!-- 付款資料 -->
+                        <div class="card border-primary">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0"><i class="bi bi-credit-card me-2"></i>付款資料</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="vstack gap-3">
+                                    <div class="alert alert-primary">
+                                        <i class="bi bi-info-circle me-2"></i>
+                                        已選擇信用卡3期分期付款，每期 NT$603
+                                        <small class="d-block mt-1">全流程通過 PCI-DSS 認證，支援海外信用卡</small>
+                                    </div>
+
+                                    <!-- 信用卡預覽 -->
+                                    <div class="card-container">
+                                        <div class="credit-card">
+                                            <div class="card-front">
+                                                <div class="card-number">•••• •••• •••• ••••</div>
+                                                <div class="card-holder">FULL NAME</div>
+                                                <div class="card-expiry">MM/YY</div>
+                                            </div>
+                                            <div class="card-back">
+                                                <div class="cvc-strip">•••</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 信用卡表單 -->
+                                    <form id="paymentForm" class="vstack gap-3">
+                                        <div class="form-floating">
+                                            <input type="tel" class="form-control" id="cardNumber" placeholder="信用卡號碼"
+                                                maxlength="19">
+                                            <label>信用卡號碼</label>
+                                        </div>
+
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="cardName" placeholder="持卡人姓名">
+                                            <label>持卡人姓名</label>
+                                        </div>
+
+                                        <div class="row g-3">
+                                            <div class="col-8 form-floating">
+                                                <input type="text" class="form-control" id="expiry" placeholder="MM/YY"
+                                                    maxlength="5">
+                                                <label>有效期限 (MM/YY)</label>
+                                            </div>
+                                            <div class="col-4 form-floating">
+                                                <input type="password" class="form-control" id="cvc" placeholder="CVC"
+                                                    maxlength="3">
+                                                <label>安全碼</label>
+                                            </div>
+                                        </div>
+
+                                        <button class="btn btn-primary w-100 py-2 mt-2" type="submit">
+                                            <i class="bi bi-lock me-2"></i>確認付款
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 送貨資料 -->
+                        <div class="card border-primary">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0"><i class="bi bi-truck me-2"></i>送貨資料</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="vstack gap-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="sameAsCustomer" checked>
+                                        <label class="form-check-label" for="sameAsCustomer">
+                                            收件人資料與顧客資料相同
+                                        </label>
+                                    </div>
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="recipientName" value="王小明">
+                                        <label>收件人名稱</label>
+                                    </div>
+                                    <div class="form-floating">
+                                        <input type="tel" class="form-control" id="recipientPhone"
+                                            value="+886 0932123456">
+                                        <label>收件人電話</label>
+                                    </div>
+                                    <div class="form-floating">
+                                        <select class="form-select" id="invoiceType">
+                                            <option>雲端發票</option>
+                                            <option>紙本發票</option>
+                                        </select>
+                                        <label>發票類型</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between mt-3">
+                <button class="btn btn-primary">返回購物車</button>
+                <button class="btn btn-primary">提交訂單</button>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            // 信用卡互動功能
+            const creditCard = document.querySelector('.credit-card');
+            const inputs = {
+                number: document.getElementById('cardNumber'),
+                name: document.getElementById('cardName'),
+                expiry: document.getElementById('expiry'),
+                cvc: document.getElementById('cvc')
+            };
+
+            // 即時預覽更新
+            function updatePreview() {
+                const preview = {
+                    number: document.querySelector('.card-number'),
+                    name: document.querySelector('.card-holder'),
+                    expiry: document.querySelector('.card-expiry'),
+                    cvc: document.querySelector('.cvc-strip')
+                };
+
+                preview.number.textContent = inputs.number.value.replace(/\d{4}(?=.)/g, '$& ') || '•••• •••• •••• ••••';
+                preview.name.textContent = inputs.name.value.toUpperCase() || 'FULL NAME';
+                preview.expiry.textContent = inputs.expiry.value || 'MM/YY';
+                preview.cvc.textContent = inputs.cvc.value.replace(/./g, '•') || '•••';
+            }
+
+            // 輸入格式化
+            inputs.number.addEventListener('input', function (e) {
+                this.value = this.value.replace(/\D/g, '')
+                    .replace(/(\d{4})/g, '$1 ')
+                    .trim()
+                    .substring(0, 19);
+                updatePreview();
+            });
+
+            inputs.expiry.addEventListener('input', function (e) {
+                this.value = this.value.replace(/^(\d{2})(\d)/, '$1/$2')
+                    .replace(/[^\d/]/g, '')
+                    .substring(0, 5);
+                updatePreview();
+            });
+
+            // 卡片翻轉控制
+            inputs.cvc.addEventListener('focus', () => creditCard.classList.add('flipped'));
+            inputs.cvc.addEventListener('blur', () => creditCard.classList.remove('flipped'));
+
+            // 收件人資料連動
+            document.getElementById('sameAsCustomer').addEventListener('change', function (e) {
+                const disabled = this.checked;
+                document.getElementById('recipientName').disabled = disabled;
+                document.getElementById('recipientPhone').disabled = disabled;
+
+                if (disabled) {
+                    document.getElementById('recipientName').value = document.getElementById('customerName').value;
+                    document.getElementById('recipientPhone').value = document.getElementById('customerPhone').value;
+                }
+            });
+
+            // 表單驗證
+            document.getElementById('paymentForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                // 驗證邏輯...
+                alert('付款處理中...');
+            });
+        </script>
+</body>
+
+</html>
